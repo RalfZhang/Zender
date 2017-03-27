@@ -12,106 +12,117 @@
 
 <body>
 
-  <div id="root">
+  <div id="example1">
     <div>
-      <div zen-model="user"></div>
-        <h1 zen-model="title"></h1>
-      <ul zen-list="todos">
-          <li zen-list-item="todos">
-            <p zen-class="todos:done" zen-model="todos:creator"></p>
-            <p zen-model="todos:date"></p>
-            <p zen-model="todos:content"></p>
-            <ul zen-list="todos:members">
-              <li zen-list-item="todos:members">
-                <span zen-model="todos:members:name"></span>
+      <div zen-model="author"></div>
+      <h1 zen-model="title"></h1>
+      <ul zen-list="list">
+          <li zen-list-item="list">
+            <p zen-class="list:done" zen-model="list:owner"></p>
+            <p zen-model="list:date"></p>
+            <p zen-model="list:content"></p>
+            <ul zen-list="list:stuffs">
+              <li zen-list-item="list:stuffs">
+                <span zen-model="list:stuffs:name"></span>
+                *
+                <span zen-model="list:stuffs:number"></span>
               </li>
             </ul>
           </li>
       </ul>
     </div>
   </div>
-  <div id="bind">
+  <div id="example2">
     <h1 zen-model="title"></h1>
     <input zen-model="content" zen-event="input" type="text" />
     <p zen-model="content"></p>
     <p zen-model="content"></p>
   </div>
-  <!--
-  <div id="nest">
-    <h1 zen-model="title"></h1>
-    <h2 zen-model="todos:title">
-      </h1>
-      <ul zen-list="todos:tag:members">
-        <li zen-list-item="todos:tag:members">
-          <span zen-model="todos:tag:members:name"></span>
-        </li>
-      </ul>
-  </div>-->
 
   <script src='../lib/Zender.js'></script>
   <script>
     let data = {
-      title: 'todo',
-      user: 'mirone',
-      todos: [
+      title: '清单',
+      author: 'RalfZ',
+      list: [
         {
-          creator: 'keal',
+          owner: '老妈',
           done: 'undone',
-          content: 'writeMVVM',
-          date: '2016-11-17',
-          members: [
+          content: '买菜',
+          date: '2017-03-22',
+          stuffs: [
             {
-              name: 'kaito'
+              name: '西红柿',
+              number: 3
             },
             {
-              name: 'hito'
+              name: '黄瓜',
+              number: 6
             },
             {
-              name: 'QAQ'
+              name: '鸡蛋',
+              number: 30
             }
           ]
         },
         {
-          creator: 'mirone',
+          owner: '老爸',
           done: 'undone',
-          content: 'writeNode',
-          date: '2016-12-17',
-          members: [
+          content: '买饭',
+          date: '2017-03-28',
+          stuffs: [
             {
-              name: 'hitomiao'
+              name: '包子',
+              number: 3
             },
             {
-              name: 'miaomiao'
+              name: '馒头',
+              number: 4
             }
           ]
         }
       ]
     }
-    new Parser('#root', data)
+    new Parser('#example1', data)
 
-    data.todos[0].done = 'done'
-    data.todos[1].members[0].name = 'UU'
-    data.todos[1].members.push({ name: 'hitori' })
-    data.title = 'todo list!'
-    data.todos.push({
-      creator: 'k',
-      done: 'undone',
-      date: '2016-12-24',
-      content: 'get mvvm',
-      members: [
-        {
-          name: 'hito'
-        },
-      ]
-    })
-    data.todos[2].members.push({
-      name: 'asuna'
-    })
-    data.todos.splice(1, 1)
-
+    function sleep(ms=1000){
+      return new Promise(r => setTimeout(r, ms))
+    }
+    
+    (async()=>{
+      await sleep()
+      data.list[0].done = 'done'
+      await sleep()
+      data.list[1].stuffs[0].name = '鸡腿'
+      await sleep()
+      data.list[1].stuffs.push({ name: '鸡翅',number: 8 })
+      await sleep()
+      data.title = '购物清单'
+      await sleep()
+      data.list.push({
+        owner: '爷爷',
+        done: 'undone',
+        date: '2017-04-22',
+        content: '买零食',
+        stuffs: [
+          {
+            name: '烟',
+            number: 3
+          },
+        ]
+      })
+      await sleep()
+      data.list[2].stuffs.push({
+        name: '薯片',
+        number: 5
+      })
+      await sleep()
+      data.list.splice(1, 1)
+    })()
+    
     let bind = {
-      title: 'data bind',
-      content: 'qaq'
+      title: '数据绑定',
+      content: 'ABC'
     }
     let e = {
       'input': {
@@ -122,7 +133,7 @@
         }
       }
     }
-    new Parser('#bind', bind, e)
+    new Parser('#example2', bind, e)
     
   </script>
 </body>
