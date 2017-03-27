@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Examples</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <link href="" rel="stylesheet">
+</head>
+
+<body>
+
+  <div id="root">
+    <div>
+      <div zen-model="user"></div>
+        <h1 zen-model="title"></h1>
+      <ul zen-list="todos">
+          <li zen-list-item="todos">
+            <p zen-class="todos:done" zen-model="todos:creator"></p>
+            <p zen-model="todos:date"></p>
+            <p zen-model="todos:content"></p>
+            <ul zen-list="todos:members">
+              <li zen-list-item="todos:members">
+                <span zen-model="todos:members:name"></span>
+              </li>
+            </ul>
+          </li>
+      </ul>
+    </div>
+  </div>
+  <div id="bind">
+    <h1 zen-model="title"></h1>
+    <input zen-model="content" zen-event="input" type="text" />
+    <p zen-model="content"></p>
+    <p zen-model="content"></p>
+  </div>
+  <!--
+  <div id="nest">
+    <h1 zen-model="title"></h1>
+    <h2 zen-model="todos:title">
+      </h1>
+      <ul zen-list="todos:tag:members">
+        <li zen-list-item="todos:tag:members">
+          <span zen-model="todos:tag:members:name"></span>
+        </li>
+      </ul>
+  </div>-->
+
+  <script src='../lib/Zender.js'></script>
+  <script>
+    let data = {
+      title: 'todo',
+      user: 'mirone',
+      todos: [
+        {
+          creator: 'keal',
+          done: 'undone',
+          content: 'writeMVVM',
+          date: '2016-11-17',
+          members: [
+            {
+              name: 'kaito'
+            },
+            {
+              name: 'hito'
+            },
+            {
+              name: 'QAQ'
+            }
+          ]
+        },
+        {
+          creator: 'mirone',
+          done: 'undone',
+          content: 'writeNode',
+          date: '2016-12-17',
+          members: [
+            {
+              name: 'hitomiao'
+            },
+            {
+              name: 'miaomiao'
+            }
+          ]
+        }
+      ]
+    }
+    new Parser('#root', data)
+
+    data.todos[0].done = 'done'
+    data.todos[1].members[0].name = 'UU'
+    data.todos[1].members.push({ name: 'hitori' })
+    data.title = 'todo list!'
+    data.todos.push({
+      creator: 'k',
+      done: 'undone',
+      date: '2016-12-24',
+      content: 'get mvvm',
+      members: [
+        {
+          name: 'hito'
+        },
+      ]
+    })
+    data.todos[2].members.push({
+      name: 'asuna'
+    })
+    data.todos.splice(1, 1)
+
+    let bind = {
+      title: 'data bind',
+      content: 'qaq'
+    }
+    let e = {
+      'input': {
+        type: 'input',
+        fn: function (event) {
+          bind.content = this.value
+          console.log(bind.content)
+        }
+      }
+    }
+    new Parser('#bind', bind, e)
+    
+  </script>
+</body>
+
+</html>
