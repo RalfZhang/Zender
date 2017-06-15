@@ -1,0 +1,22 @@
+{
+  "name": "zender",
+  "version": "1.0.0",
+  "description": "轻量级 MVVM 引擎",
+  "main": "index.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RalfZhang/Zender.git"
+  },
+  "author": "RalfZhang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RalfZhang/Zender/issues"
+  },
+  "homepage": "https://github.com/RalfZhang/Zender#readme"
+}
